@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Roslyn.Compilers.CSharp;
 using System.Collections.Generic;
+using Roslyn.Compilers;
 
 namespace AOP.Framework.Test
 {
@@ -10,7 +11,7 @@ namespace AOP.Framework.Test
     {
         public class BeforeAdvice : IBeforeMethodAdvice
         {
-            public void Implementation(string methodName)
+            public void Implementation(string methodName, List<ObjectRep> parameters)
             {
                 Console.WriteLine(methodName);
             }
@@ -26,6 +27,7 @@ namespace AOP.Framework.Test
                     Console.WriteLine(" " + param.Name + ": " + param.Value.ToString());
                 }
             }
+
         }
 
         [TestMethod]
@@ -68,6 +70,7 @@ namespace HelloWorld
             SyntaxNode newSource = (new MethodRewriter(new BeforeAdvice(), beforeCut)).Visit(tree.GetRoot());
             newSource = (new MethodRewriter(new AfterAdvice(), afterCut)).Visit(SyntaxTree.ParseText(newSource.ToFullString()).GetRoot());
             Assert.IsNotNull(newSource);
+
             
         }
     }

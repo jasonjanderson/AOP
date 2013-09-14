@@ -47,8 +47,8 @@
   <ItemGroup>
     <Compile Include="Aspect.cs" />
     <Compile Include="BaseAOPRewriter.cs" />
-    <Compile Include="IAfterMethodAdvice.cs" />
     <Compile Include="IAdvice.cs" />
+    <Compile Include="IAfterMethodAdvice.cs" />
     <Compile Include="IBeforeMethodAdvice.cs" />
     <Compile Include="MethodNamePointCut.cs" />
     <Compile Include="ObjectRep.cs" />
