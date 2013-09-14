@@ -5,8 +5,8 @@ using System.Text;
 
 namespace AOP.Framework
 {
-    public abstract class PointCut
+    public class PointCut
     {
-        internal abstract object GetJoinPoints();
+        internal virtual object GetJoinPoints() { return null; }
     }
 }

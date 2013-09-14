@@ -7,12 +7,16 @@ namespace AOP.Framework.Test
     [TestClass]
     public class PropertyTest
     {
-        public class BeforeAdvice : IBeforeAdvice
+        public class BeforeAdvice : BaseBeforeAdvice
         {
 
-            public void Implementation(string methodName)
+            public override void Implementation(string methodName)
             {
                 Console.WriteLine(methodName);
+            }
+            public BeforeAdvice(string path) : base(path)
+            {
+
             }
         }
 
@@ -47,7 +51,7 @@ namespace HelloWorld
         }
     }
 }");
-            SyntaxNode newSource = (new FunctionRewriter(new BeforeAdvice())).Visit(tree.GetRoot());
+            SyntaxNode newSource = (new FunctionRewriter(new BeforeAdvice(@"C:\Users\nectro\Documents\GitHub\AOP\AOP.Framework.Test\PropertyTest.cs"))).Visit(tree.GetRoot());
             Assert.IsNotNull(newSource);
             
         }

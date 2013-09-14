@@ -4,31 +4,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace AOP.Framework
 {
-    public sealed class FunctionRewriter : BaseAOPRewriter
+    public sealed class FunctionRewriter : SyntaxRewriter
     {
-        private readonly IBeforeAdvice _advice;
+        private readonly BaseBeforeAdvice _advice;
 
-        public FunctionRewriter(IBeforeAdvice advice)
+        public FunctionRewriter(BaseBeforeAdvice advice)
         {
             this._advice = advice;
         }
 
         public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            
-            return node; //node.Body.Statements.Add(new BlockSyntax();
+            var c = SyntaxTree.ParseFile(_advice.Path).GetRoot().ChildNodes().Where(i => i.Kind == SyntaxKind.ClassDeclaration);
+            var adviceType = _advice.GetType();
+            var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\");", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText);
+            var statements = new List<StatementSyntax>();
+            statements.Add(Syntax.ParseStatement(funcCall));
+            statements.AddRange(node.Body.Statements);
+            return node.WithBody(Syntax.Block(statements).NormalizeWhitespace());
+            //return node; //node.Body.Statements.Add(new BlockSyntax();
         }
 
-        //public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
-        //{
-        //    var field = SyntaxTree.ParseText("private FunctionEvents _events;");
-        //    return node.AddMembers(field.GetRoot().Members[0]);
-        //    //return node.WithMembers(newmembers);
-
-        //}
 
 
 
