@@ -14,7 +14,16 @@ namespace AOP.Framework
 
         internal override bool Match(SyntaxNode node)
         {
-            return false;
+            if (node is MethodDeclarationSyntax)
+            {
+                MethodDeclarationSyntax method = node as MethodDeclarationSyntax;
+                return Expression.IsMatch(method.Identifier.ValueText);
+            }
+            else
+            {
+                return false;
+            }
         }
+    
     }
 }
