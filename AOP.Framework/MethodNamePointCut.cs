@@ -13,7 +13,7 @@ namespace AOP.Framework
 
         internal override object GetJoinPoints()
         {
-            return base.GetJoinPoints();
+
         }
     }
 }
