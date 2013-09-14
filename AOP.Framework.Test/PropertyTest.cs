@@ -7,6 +7,15 @@ namespace AOP.Framework.Test
     [TestClass]
     public class PropertyTest
     {
+        public class BeforeAdvice : IBeforeAdvice
+        {
+
+            public void Implementation(string methodName)
+            {
+                Console.WriteLine(methodName);
+            }
+        }
+
         [TestMethod]
         public void TestProperty()
         {
@@ -31,9 +40,14 @@ namespace HelloWorld
         {
             Console.WriteLine(""Hello, World!"");
         }
+
+        int GetStuff(int stuff1, string stuff2, List<string> stuff3)
+        {
+            return _test;
+        }
     }
 }");
-            SyntaxNode newSource = (new FunctionRewriter(new FunctionEvents())).Visit(tree.GetRoot());
+            SyntaxNode newSource = (new FunctionRewriter(new BeforeAdvice())).Visit(tree.GetRoot());
             Assert.IsNotNull(newSource);
             
         }

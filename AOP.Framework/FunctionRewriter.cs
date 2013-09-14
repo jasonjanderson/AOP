@@ -9,25 +9,26 @@ namespace AOP.Framework
 {
     public sealed class FunctionRewriter : BaseAOPRewriter
     {
-        private readonly FunctionEvents _events;
+        private readonly IBeforeAdvice _advice;
 
-        public FunctionRewriter(FunctionEvents events)
+        public FunctionRewriter(IBeforeAdvice advice)
         {
-            this._events = events;
+            this._advice = advice;
         }
 
         public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
+            
             return node; //node.Body.Statements.Add(new BlockSyntax();
         }
 
-        public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
-        {
-            var field = SyntaxTree.ParseText("private FunctionEvents _;");
-            return node.AddMembers(field.GetRoot().Members[0]);
-            //return node.WithMembers(newmembers);
+        //public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
+        //{
+        //    var field = SyntaxTree.ParseText("private FunctionEvents _events;");
+        //    return node.AddMembers(field.GetRoot().Members[0]);
+        //    //return node.WithMembers(newmembers);
 
-        }
+        //}
 
 
 

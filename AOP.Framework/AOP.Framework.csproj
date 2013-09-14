@@ -48,6 +48,7 @@
     <Compile Include="BaseAOPRewriter.cs" />
     <Compile Include="FunctionEvents.cs" />
     <Compile Include="FunctionRewriter.cs" />
+    <Compile Include="IBeforeAdvice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>
