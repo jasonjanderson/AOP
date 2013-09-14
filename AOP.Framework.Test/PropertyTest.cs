@@ -48,7 +48,7 @@ namespace HelloWorld
 }");
             MethodNamePointCut cut = new MethodNamePointCut();
             cut.Expression = new System.Text.RegularExpressions.Regex("Get?");
-            SyntaxNode newSource = (new FunctionRewriter(new BeforeAdvice(), new MethodNamePointCut())).Visit(tree.GetRoot());
+            SyntaxNode newSource = (new FunctionRewriter(new BeforeAdvice(), cut)).Visit(tree.GetRoot());
             Assert.IsNotNull(newSource);
             
         }
