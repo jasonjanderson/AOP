@@ -48,6 +48,8 @@
     <Compile Include="Aspect.cs" />
     <Compile Include="BaseAOPRewriter.cs" />
     <Compile Include="BaseAdvice.cs" />
+    <Compile Include="IAdvice.cs" />
+    <Compile Include="IBeforeAdvice.cs" />
     <Compile Include="MethodNamePointCut.cs" />
     <Compile Include="ObjectRep.cs" />
     <Compile Include="FunctionEvents.cs" />

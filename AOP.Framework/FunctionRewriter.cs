@@ -10,23 +10,27 @@ namespace AOP.Framework
 {
     public sealed class FunctionRewriter : SyntaxRewriter
     {
-        private readonly BaseBeforeAdvice _advice;
+        private readonly IAdvice _advice;
+        private readonly PointCut _pointCut;
 
-        public FunctionRewriter(BaseBeforeAdvice advice)
+        public FunctionRewriter(IAdvice advice, PointCut pointCut)
         {
             this._advice = advice;
+            this._pointCut = pointCut;
         }
 
         public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            var c = SyntaxTree.ParseFile(_advice.Path).GetRoot().ChildNodes().Where(i => i.Kind == SyntaxKind.ClassDeclaration);
-            var adviceType = _advice.GetType();
-            var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\");", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText);
-            var statements = new List<StatementSyntax>();
-            statements.Add(Syntax.ParseStatement(funcCall));
-            statements.AddRange(node.Body.Statements);
-            return node.WithBody(Syntax.Block(statements).NormalizeWhitespace());
-            //return node; //node.Body.Statements.Add(new BlockSyntax();
+            if (_pointCut.Match(node))
+            {
+                var adviceType = _advice.GetType();
+                var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\");", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText);
+                var statements = new List<StatementSyntax>();
+                statements.Add(Syntax.ParseStatement(funcCall));
+                statements.AddRange(node.Body.Statements);
+                return node.WithBody(Syntax.Block(statements).NormalizeWhitespace());
+            }
+            return node;
         }
 
 

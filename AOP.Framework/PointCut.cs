@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Roslyn.Compilers.CSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace AOP.Framework
 {
-    public class PointCut
+    public abstract class PointCut
     {
-        internal virtual object GetJoinPoints() { return null; }
+        internal abstract bool Match(SyntaxNode node);
     }
 }
