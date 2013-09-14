@@ -8,8 +8,8 @@ namespace AOP.Framework
 {
     public class Aspect
     {
-        public List<BaseAdvice> Advices { get; set; }
+        public List<IAdvice> Advices { get; set; }
 
-        public List<PointCut> PointCuts { get; set; }
+        public List<BasePointCut> PointCuts { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AOP.Framework
 {
-    public abstract class PointCut
+    public abstract class BasePointCut
     {
         internal abstract bool Match(SyntaxNode node);
     }

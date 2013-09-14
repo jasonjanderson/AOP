@@ -11,9 +11,9 @@ namespace AOP.Framework
     public sealed class FunctionRewriter : SyntaxRewriter
     {
         private readonly IAdvice _advice;
-        private readonly PointCut _pointCut;
+        private readonly BasePointCut _pointCut;
 
-        public FunctionRewriter(IAdvice advice, PointCut pointCut)
+        public FunctionRewriter(IAdvice advice, BasePointCut pointCut)
         {
             this._advice = advice;
             this._pointCut = pointCut;

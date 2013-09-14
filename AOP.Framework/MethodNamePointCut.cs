@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AOP.Framework
 {
-    public class MethodNamePointCut : PointCut
+    public class MethodNamePointCut : BasePointCut
     {
         public Regex Expression { get; set; }
 
