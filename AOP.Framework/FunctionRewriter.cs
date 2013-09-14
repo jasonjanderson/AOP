@@ -23,19 +23,9 @@ namespace AOP.Framework
 
         public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var field = Syntax.FieldDeclaration(
-                    Syntax.VariableDeclaration(
-                        Syntax.PredefinedType(
-                            Syntax.Token(
-                                SyntaxKind.StringKeyword
-                            )
-                        )
-                    )
-                )
-                .WithModifiers(Syntax.Token(SyntaxKind.PrivateKeyword))
-                .AddDeclarationVariables(Syntax.VariableDeclarator("_newField"));
-            node.AddMembers(field).NormalizeWhitespace();
-            return node;
+            var field = SyntaxTree.ParseText("private FunctionEvents _;");
+            return node.AddMembers(field.GetRoot().Members[0]);
+            //return node.WithMembers(newmembers);
 
         }
 
