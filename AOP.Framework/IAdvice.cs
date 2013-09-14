@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AOP.Framework
 {
-    interface IAdvice
+    public interface IAdvice
     {
     }
 }
