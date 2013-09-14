@@ -8,6 +8,6 @@ namespace AOP.Framework
 {
     public interface IBeforeAdvice : IAdvice
     {
-        void Implementation(string methodName);
+        void Implementation(string methodName, List<ObjectRep> Parameters, ObjectRep ReturnValue, ref bool CallThru);
     }
 }
