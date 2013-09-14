@@ -24,7 +24,14 @@ namespace AOP.Framework
             if (_pointCut.Match(node))
             {
                 var adviceType = _advice.GetType();
-                var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\");", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText);
+                var paramsBuilder = new StringBuilder("new List<AOP.Framework.ObjectRep>() {");
+                for (int i = 0; i < node.ParameterList.Parameters.Count; i++)
+                {
+                    var p = node.ParameterList.Parameters[i];
+                    paramsBuilder.Append(string.Format("new AOP.Framework.ObjectRep(\"{0}\", {0})", p.Identifier.ValueText)).Append(i < (node.ParameterList.Parameters.Count - 1) ? "," : "}");
+                }
+
+                var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\", {3});", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText, paramsBuilder.ToString());
                 var statements = new List<StatementSyntax>();
                 statements.Add(Syntax.ParseStatement(funcCall));
                 statements.AddRange(node.Body.Statements);

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Roslyn.Compilers.CSharp;
+using System.Collections.Generic;
 
 namespace AOP.Framework.Test
 {
@@ -9,9 +10,13 @@ namespace AOP.Framework.Test
     {
         public class BeforeAdvice : IBeforeAdvice
         {
-            public void Implementation(string methodName)
+            public void Implementation(string methodName, List<ObjectRep> parameters)
             {
-                Console.WriteLine(methodName);
+                Console.WriteLine(methodName + ":");
+                foreach (var param in parameters)
+                {
+                    Console.WriteLine(" " + param.Name + ": " + param.Value.ToString());
+                }
             }
         }
 

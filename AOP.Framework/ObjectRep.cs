@@ -10,8 +10,14 @@ namespace AOP.Framework
     {
         public string Name { get; set; }
 
-        public Type Type { get; set; }
+        //public Type Type { get; set; }
 
         public object Value { get; set; }
+
+        public ObjectRep(string Name, object Value)
+        {
+            Name = this.Name;
+            Value = this.Value;
+        }
     }
 }
