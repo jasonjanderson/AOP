@@ -8,12 +8,12 @@ using System.Reflection;
 
 namespace AOP.Framework
 {
-    public sealed class FunctionRewriter : SyntaxRewriter
+    public sealed class MethodRewriter : SyntaxRewriter
     {
         private readonly IAdvice _advice;
         private readonly BasePointCut _pointCut;
 
-        public FunctionRewriter(IAdvice advice, BasePointCut pointCut)
+        public MethodRewriter(IAdvice advice, BasePointCut pointCut)
         {
             this._advice = advice;
             this._pointCut = pointCut;
@@ -33,8 +33,9 @@ namespace AOP.Framework
 
                 var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\", {3});", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText, paramsBuilder.ToString());
                 var statements = new List<StatementSyntax>();
-                statements.Add(Syntax.ParseStatement(funcCall));
+                if (_advice is IBeforeMethodAdvice) statements.Add(Syntax.ParseStatement(funcCall));
                 statements.AddRange(node.Body.Statements);
+                if (_advice is IAfterMethodAdvice) statements.Add(Syntax.ParseStatement(funcCall));
                 return node.WithBody(Syntax.Block(statements).NormalizeWhitespace());
             }
             return node;

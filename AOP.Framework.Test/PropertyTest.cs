@@ -8,7 +8,15 @@ namespace AOP.Framework.Test
     [TestClass]
     public class PropertyTest
     {
-        public class BeforeAdvice : IBeforeAdvice
+        public class BeforeAdvice : IBeforeMethodAdvice
+        {
+            public void Implementation(string methodName)
+            {
+                Console.WriteLine(methodName);
+            }
+        }
+
+        public class AfterAdvice : IAfterMethodAdvice
         {
             public void Implementation(string methodName, List<ObjectRep> parameters)
             {
@@ -28,7 +36,8 @@ namespace AOP.Framework.Test
 using System.Collections;
 using System.Linq;
 using System.Text;
- 
+using AOP.Framework;
+
 namespace HelloWorld
 {
     class Program
@@ -45,15 +54,19 @@ namespace HelloWorld
             Console.WriteLine(""Hello, World!"");
         }
 
-        int GetStuff(int stuff1, string stuff2, List<string> stuff3)
+        int GetStuff(int stuff1, BasePointCut stuff2, List<string> stuff3)
         {
             return _test;
         }
     }
 }");
-            MethodNamePointCut cut = new MethodNamePointCut();
-            cut.Expression = new System.Text.RegularExpressions.Regex("Get?");
-            SyntaxNode newSource = (new FunctionRewriter(new BeforeAdvice(), cut)).Visit(tree.GetRoot());
+            MethodNamePointCut beforeCut = new MethodNamePointCut();
+            beforeCut.Expression = new System.Text.RegularExpressions.Regex("Get?");
+
+            MethodNamePointCut afterCut = new MethodNamePointCut();
+            afterCut.Expression = new System.Text.RegularExpressions.Regex("Main");
+            SyntaxNode newSource = (new MethodRewriter(new BeforeAdvice(), beforeCut)).Visit(tree.GetRoot());
+            newSource = (new MethodRewriter(new AfterAdvice(), afterCut)).Visit(SyntaxTree.ParseText(newSource.ToFullString()).GetRoot());
             Assert.IsNotNull(newSource);
             
         }

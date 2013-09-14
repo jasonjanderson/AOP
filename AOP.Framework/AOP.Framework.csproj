@@ -46,11 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aspect.cs" />
+    <Compile Include="BaseAOPRewriter.cs" />
+    <Compile Include="IAfterMethodAdvice.cs" />
     <Compile Include="IAdvice.cs" />
-    <Compile Include="IBeforeAdvice.cs" />
+    <Compile Include="IBeforeMethodAdvice.cs" />
     <Compile Include="MethodNamePointCut.cs" />
     <Compile Include="ObjectRep.cs" />
-    <Compile Include="FunctionRewriter.cs" />
+    <Compile Include="MethodRewriter.cs" />
     <Compile Include="BasePointCut.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workspace.cs" />
