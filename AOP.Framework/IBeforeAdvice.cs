@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AOP.Framework
 {
-    public interface IBeforeAdvice
+    public interface IBeforeAdvice : IAdvice
     {
         void Implementation(string methodName);
     }
