@@ -16,8 +16,8 @@ namespace AOP.Framework
 
         public ObjectRep(string Name, object Value)
         {
-            Name = this.Name;
-            Value = this.Value;
+            this.Name = Name;
+            this.Value = Value;
         }
     }
 }

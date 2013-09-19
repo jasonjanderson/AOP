@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOP.Framework", "AOP.Framew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOP.Framework.Test", "AOP.Framework.Test\AOP.Framework.Test.csproj", "{C7320D67-D005-4284-BF5A-D7848C2B198A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{2A6499AA-9398-4369-8B89-8F2F23EB0C5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{C7320D67-D005-4284-BF5A-D7848C2B198A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7320D67-D005-4284-BF5A-D7848C2B198A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7320D67-D005-4284-BF5A-D7848C2B198A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A6499AA-9398-4369-8B89-8F2F23EB0C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A6499AA-9398-4369-8B89-8F2F23EB0C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A6499AA-9398-4369-8B89-8F2F23EB0C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A6499AA-9398-4369-8B89-8F2F23EB0C5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

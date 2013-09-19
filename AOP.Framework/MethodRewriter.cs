@@ -31,7 +31,7 @@ namespace AOP.Framework
                     paramsBuilder.Append(string.Format("new AOP.Framework.ObjectRep(\"{0}\", {0})", p.Identifier.ValueText)).Append(i < (node.ParameterList.Parameters.Count - 1) ? "," : "}");
                 }
 
-                var funcCall = string.Format("(new {0}.{1}()).Implemenation(\"{2}\", {3});", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText, paramsBuilder.ToString());
+                var funcCall = string.Format("(new {0}.{1}()).Implementation(\"{2}\", {3});", adviceType.Namespace, adviceType.Name, node.Identifier.ValueText, paramsBuilder.ToString());
                 var statements = new List<StatementSyntax>();
                 if (_advice is IBeforeMethodAdvice) statements.Add(Syntax.ParseStatement(funcCall));
                 statements.AddRange(node.Body.Statements);

@@ -3,20 +3,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Roslyn.Compilers.CSharp;
 using System.Collections.Generic;
 using Roslyn.Compilers;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using AOP.Framework;
 
 namespace AOP.Framework.Test
 {
     [TestClass]
     public class PropertyTest
     {
-        public class BeforeAdvice : IBeforeMethodAdvice
-        {
-            public void Implementation(string methodName, List<ObjectRep> parameters)
-            {
-                Console.WriteLine(methodName);
-            }
-        }
-
         public class AfterAdvice : IAfterMethodAdvice
         {
             public void Implementation(string methodName, List<ObjectRep> parameters)
@@ -33,45 +29,51 @@ namespace AOP.Framework.Test
         [TestMethod]
         public void TestProperty()
         {
-            SyntaxTree tree = SyntaxTree.ParseText(
-@"using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using AOP.Framework;
-
-namespace HelloWorld
-{
-    class Program
-    {
-        private int _test;
-
-        public int Test 
-        {
-            get;
-            set;
-        }
-        static void Main(string[] args)
-        {
-            Console.WriteLine(""Hello, World!"");
-        }
-
-        int GetStuff(int stuff1, BasePointCut stuff2, List<string> stuff3)
-        {
-            return _test;
-        }
-    }
-}");
-            MethodNamePointCut beforeCut = new MethodNamePointCut();
-            beforeCut.Expression = new System.Text.RegularExpressions.Regex("Get?");
-
-            MethodNamePointCut afterCut = new MethodNamePointCut();
-            afterCut.Expression = new System.Text.RegularExpressions.Regex("Main");
-            SyntaxNode newSource = (new MethodRewriter(new BeforeAdvice(), beforeCut)).Visit(tree.GetRoot());
-            newSource = (new MethodRewriter(new AfterAdvice(), afterCut)).Visit(SyntaxTree.ParseText(newSource.ToFullString()).GetRoot());
+            string filePath = @"C:\Users\odiernod\Documents\GitHub\AOP\HelloWorld\Program.cs";
+            SyntaxTree tree = SyntaxTree.ParseText(File.ReadAllText(filePath));
+            MethodNamePointCut cut = new MethodNamePointCut();
+            cut.Expression = new System.Text.RegularExpressions.Regex("Get?");
+            SyntaxNode newSource = (new MethodRewriter(new ConsoleWriteLineBeforeAdvice(), cut)).Visit(tree.GetRoot());
             Assert.IsNotNull(newSource);
+            File.WriteAllText(filePath, newSource.ToFullString());
+        }
+
+//        private void compileAndRun(SyntaxNode newSource)
+//        {
+//            var syntaxTree = SyntaxTree.ParseText(newSource.ToFullString());
+//            string dllPath = Path.Combine(Directory.GetCurrentDirectory(), "runStuff.exe");
+//>>>>>>> Got Demo working
 
             
-        }
+//            var compilation = Compilation.Create("injectedProgram.exe", 
+//                syntaxTrees: new[] { syntaxTree },
+//                references: new[] {
+//                    new MetadataFileReference(typeof(object).Assembly.Location),
+//                    new MetadataFileReference(typeof(Enumerable).Assembly.Location),
+//                },
+//                options: new CompilationOptions(OutputKind.ConsoleApplication)
+//            );
+            
+
+//            EmitResult result;
+
+
+//            result = compilation.Emit(dllPath);
+
+//            //if (true)//result.Success)
+//            //{
+//            //    //assembly = Assembly.LoadFile(Path.Combine(Directory.GetCurrentDirectory(), @"Greeter.dll"));
+//            //    Assembly assembly = Assembly.LoadFrom(dllPath);
+
+//            //    Type type = assembly.GetType("HelloWorld.Program");
+//            //    var obj = Activator.CreateInstance(type);
+
+//            //    type.InvokeMember("Main",
+//            //        BindingFlags.Default | BindingFlags.InvokeMethod,
+//            //        null,
+//            //        obj,
+//            //        null);
+//            //}
+//        }
     }
 }
